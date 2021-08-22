@@ -1,0 +1,155 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Temperature Convertion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="img/OIP.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <form class="text-center">
+            <div class="h4 mb-4" id="date-part"></div>
+            <div class="h4 mb-4" id="time-part"></div>
+            <p class="h4 mb-4">Temperature Convertion</p>
+            <div class="h4 mb-12">
+                <select name="from" id="from" onchange="select()">
+                    <option value="cel">Celcius</option>
+                    <option value="far">Farenheit</option>
+                    <option value="rea">Reamur</option>
+                    <option value="kel">Kelvin</option>
+                </select>
+                <span> to</span>
+                <select name="to" id="to" onchange="select()">
+                    <option value="cel">Celcius</option>
+                    <option value="far">Farenheit</option>
+                    <option value="rea">Reamur</option>
+                    <option value="kel">Kelvin</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="col sm-6">
+                    <input type="number" name="kmh" id="num1" class="form-control mb-4" placeholder="some number"
+                        onkeypress="validate(event)" onkeyup="conv()" />
+                </div>
+                <div class="col sm-6">
+                    <input type="number" id="result" class="form-control mb-4" placeholder="result" disabled />
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col sm-6 mb-2">
+                <span> Change Background Color : </span> <input class="form-control" id="color" />
+            </div>
+            <div class="col sm-6 mt-4">
+                <button type="button" class="btn btn-info" onclick="change()">
+                    Change
+                </button>
+            </div>
+        </div>
+        <span class="foot d-flex justify-content-center mt-5 mb-2">
+            <a href="https://www.instagram.com/" target="__blank" class="link link-light" style="text-decoration: bold"
+                ;>Made with 💖
+                Furqon Dinata !!</a>
+        </span>
+    </div>
+</body>
+
+<script src="./Convert.js"></script>
+
+<script>
+    $(document).ready(function () {
+        tanggal();
+
+    });
+
+    function tanggal() {
+        var interval = setInterval(function () {
+            var momentNow = moment();
+            $("#date-part").html(
+                momentNow.format("DD MMMM YYYY") +
+                " " +
+                momentNow.format("dddd").substring(0, ).toUpperCase()
+            );
+            $("#time-part").html(momentNow.format("A hh:mm:ss"));
+        }, 100);
+    }
+
+    const convert = new Convert();
+
+    function conv() {
+        if (document.getElementById("from").value == "cel") {
+            const res = convert.fromCelcius(
+                document.getElementById("to").value,
+                parseInt(document.getElementById("num1").value)
+            );
+            document.getElementById("result").value = res;
+        }
+        if (document.getElementById("from").value == "rea") {
+            const res = convert.fromReamur(
+                document.getElementById("to").value,
+                parseInt(document.getElementById("num1").value)
+            );
+            document.getElementById("result").value = res;
+        }
+        if (document.getElementById("from").value == "far") {
+            const res = convert.fromFarenheit(
+                document.getElementById("to").value,
+                parseInt(document.getElementById("num1").value)
+            );
+            document.getElementById("result").value = res;
+        }
+        if (document.getElementById("from").value == "kel") {
+            const res = convert.fromKelvin(
+                document.getElementById("to").value,
+                parseInt(document.getElementById("num1").value)
+            );
+            document.getElementById("result").value = res;
+        }
+    }
+
+    function select() {
+        document.getElementById("num1").value = "";
+        document.getElementById("result").value = "";
+    }
+
+    function change() {
+        if (document.getElementById("color").value == "") {
+            // alert("ops please input your color before click button change");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...!!!',
+                text: 'please input your color before you click button change',
+            })
+        } else {
+            document.body.style.backgroundColor =
+                document.getElementById("color").value;
+
+        }
+
+    }
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/TextPlugin.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+
+</html>
